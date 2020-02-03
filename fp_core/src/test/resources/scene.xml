@@ -1,0 +1,10 @@
+<scene>
+	<player x="30" y="60">
+		<body />
+		<drag />
+	</player>
+	<group name="enemies">
+		<enemy image="enemy.png" />
+		<enemy image="enemy2.png" />
+	</group>
+</scene>

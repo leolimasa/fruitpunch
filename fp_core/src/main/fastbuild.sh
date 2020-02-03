@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# DIRS
+CURDIR=`pwd`
+TARGET=`readlink -f $CURDIR/../../target`
+BASEDIR=`readlink -f $CURDIR/../../`
+STAGINGDIR=$TARGET/staging
+STAGINGTESTDIR=$TARGET/staging-test
+LIBS=$TARGET/dependencies/linux-x64/lib
+INCLUDES=$TARGET/dependencies/linux-x64/include
+
+# FLAGS
+CXXFLAGS="-DGTEST_HAS_PTHREAD=0 -I$INCLUDES -I$INCLUDES/freetype2 -I$INCLUDES/python2.7 -g -pthread -pg -O0"
+LINKERFLAGS="-L$TARGET/staging -L$LIBS -lpugixml -lpthread -pg"
+
+# OPTIONS
+CMAKECMD="cmake -DCMAKE_LIBRARY_PATH=\"$LIBS\" -DCMAKE_INCLUDE_PATH=\"$INCLUDES\" -DCMAKE_MODULE_LINKER_FLAGS=\"$LINKERFLAGS\" -DCMAKE_EXE_LINKER_FLAGS=\"$LINKERFLAGS\" -DCMAKE_SHARED_LINKER_FLAGS=\"$LINKERFLAGS\" -DCMAKE_CXX_FLAGS=\"$CXXFLAGS\""
+
+
+mkdir $STAGINGDIR
+cd $STAGINGDIR
+eval "$CMAKECMD $BASEDIR/src/main"
+make -j16
+
+mkdir $STAGINGTESTDIR
+cd $STAGINGTESTDIR
+eval "$CMAKECMD $BASEDIR/src/test"
+make -j16
