@@ -1,0 +1,7 @@
+<scene>
+	<ball image_url="blue.png" top="50" left="50" />
+	<pin image_url="green.png" top="50" left="400" />
+	<pin image_url="grey.png" top="100" left="400" />
+	<pin image_url="pink.png" top="150" left="400" />
+	<ground image_url="ground.png" width="700" top="400" left="0" />
+</scene>
